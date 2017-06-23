@@ -1,0 +1,9 @@
+bin
+*.user
+*.csuser
+Debug/
+Release/
+packages/
+.vs/
+*.bak
+*.suo
