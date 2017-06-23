@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E5F6FDA-66FE-48EC-A546-00308584217B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ECSSDK.S3</RootNamespace>
+    <AssemblyName>ECSSDK.S3</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.Core.3.3.14.2\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.S3.3.3.7\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ECSS3Client.cs" />
+    <Compile Include="Internal\S3SignerECS.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\ECSTransforms.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\ListBucketMetaSearchKeysRequestMarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\ListBucketMetaSearchKeysResponseUnMarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\ListSystemMetaSearchKeysRequestMarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\ListSystemMetaSearchKeysResponseUnMarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\MetaSearchKeyUnmarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\PutBucketRequestMarshallerECS.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\PutBucketResponseUnmarshallerECS.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\PutObjectRequestMarshallerECS.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\PutObjectResponseUnmarshallerECS.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\QueryMetadataMapUnmarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\QueryMetadataUnmarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\QueryObjectsRequestMarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\QueryObjectsResponseUnmarshaller.cs" />
+    <Compile Include="Model\Internal\MarshallTransformations\QueryObjectUnmarshaller.cs" />
+    <Compile Include="Model\ListBucketMetaSearchKeysRequest.cs" />
+    <Compile Include="Model\ListBucketMetaSearchKeysResponse.cs" />
+    <Compile Include="Model\ListSystemMetaSearchKeysRequest.cs" />
+    <Compile Include="Model\ListSystemMetaSearchKeysResponse.cs" />
+    <Compile Include="Model\PutBucketRequestECS.cs" />
+    <Compile Include="Model\PutBucketResponseECS.cs" />
+    <Compile Include="Model\PutObjectRequestECS.cs" />
+    <Compile Include="Model\PutObjectResponseECS.cs" />
+    <Compile Include="Model\QueryObjectsRequest.cs" />
+    <Compile Include="Model\QueryObjectsResponse.cs" />
+    <Compile Include="Model\Util\Common.cs" />
+    <Compile Include="Model\Util\Enumerations.cs" />
+    <Compile Include="Model\Util\MetaSearchKey.cs" />
+    <Compile Include="Model\Util\MetaSearchList.cs" />
+    <Compile Include="Model\Util\QueryMetadata.cs" />
+    <Compile Include="Model\Util\QueryMetadataMap.cs" />
+    <Compile Include="Model\Util\QueryObject.cs" />
+    <Compile Include="Model\Util\Range.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ecs-object-client-dotnet.licenseheader" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\AWSSDK.S3.3.3.7\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECSSDK.S3", "ecs-object-client-dotnet\ECSSDK.S3.csproj", "{6E5F6FDA-66FE-48EC-A546-00308584217B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECSSDK.Test", "ecs-object-client-dotnet-test\ECSSDK.Test.csproj", "{3F82207B-99AC-4810-91D6-72B3743770C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E5F6FDA-66FE-48EC-A546-00308584217B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5F6FDA-66FE-48EC-A546-00308584217B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5F6FDA-66FE-48EC-A546-00308584217B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E5F6FDA-66FE-48EC-A546-00308584217B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F82207B-99AC-4810-91D6-72B3743770C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F82207B-99AC-4810-91D6-72B3743770C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F82207B-99AC-4810-91D6-72B3743770C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F82207B-99AC-4810-91D6-72B3743770C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
