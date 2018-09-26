@@ -24,7 +24,7 @@ namespace ECSSDK.S3.Model.Util
         public static string EMC_RETENTION_PERIOD = EMC_PREFIX + "retention-period";
         public static string EMC_RETENTION_POLICY = EMC_PREFIX + "retention-policy";
         public static string EMC_STALE_READ_ALLOWED = EMC_PREFIX + "is-stale-allowed";
-        public static string EMC_VPOOL = EMC_PREFIX + "vpool";
+        public static string EMC_VPOOL = EMC_PREFIX + "dataservice-vpool";
         public static string EMC_COMPLIANCE_ENABLED = EMC_PREFIX + "compliance-enabled";
         public static string EMC_DARE_ENABLED = EMC_PREFIX + "server-side-encryption-enabled";
         public static string EMC_NAMESPACE = EMC_PREFIX + "namespace";
