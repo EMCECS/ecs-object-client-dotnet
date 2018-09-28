@@ -40,48 +40,6 @@ namespace ECSSDK.Test
         ///</summary>
         static string temp_bucket = Guid.NewGuid().ToString();
 
-        /// <summary>
-        /// List of indexable keys to be created with the bucket.
-        /// </summary>
-        static List<MetaSearchKey> bucketMetadataSearchKeys = new List<MetaSearchKey>()
-        {
-            new MetaSearchKey() { Name = "x-amz-meta-datetimevalue", Type = MetaSearchDatatype.datetime },
-            new MetaSearchKey() { Name = "x-amz-meta-decimalvalue", Type = MetaSearchDatatype.@decimal },
-            new MetaSearchKey() { Name = "x-amz-meta-integervalue", Type = MetaSearchDatatype.integer },
-            new MetaSearchKey() { Name = "x-amz-meta-stringvalue", Type = MetaSearchDatatype.@string }
-        };
-
-        /// <summary>
-        /// List of system indexable that can be created with the bucket.
-        /// </summary>
-        static List<MetaSearchKey> indexableSystemKeys = new List<MetaSearchKey>()
-        {
-                new MetaSearchKey() { Name = "CreateTime", Type = MetaSearchDatatype.@datetime},
-                new MetaSearchKey() { Name = "LastModified", Type = MetaSearchDatatype.@datetime},
-                new MetaSearchKey() { Name = "ObjectName", Type = MetaSearchDatatype.@string },
-                new MetaSearchKey() { Name = "Owner", Type = MetaSearchDatatype.@string },
-                new MetaSearchKey() { Name = "Size", Type = MetaSearchDatatype.integer}
-        };
-
-        /// <summary>
-        /// List of system optional attributes that can be created with the bucket.
-        /// </summary>
-        static List<MetaSearchKey> optionalSystemKeys = new List<MetaSearchKey>()
-        {
-                new MetaSearchKey() { Name = "ContentEncoding", Type = MetaSearchDatatype.@string},
-                new MetaSearchKey() { Name = "ContentType", Type = MetaSearchDatatype.@string},
-                new MetaSearchKey() { Name = "CreateTime", Type = MetaSearchDatatype.@datetime },
-                new MetaSearchKey() { Name = "Etag", Type = MetaSearchDatatype.@string },
-                new MetaSearchKey() { Name = "Expiration", Type = MetaSearchDatatype.@datetime},
-                new MetaSearchKey() { Name = "Expires", Type = MetaSearchDatatype.@datetime },
-                new MetaSearchKey() { Name = "LastModified", Type = MetaSearchDatatype.@datetime },
-                new MetaSearchKey() { Name = "Namespace", Type = MetaSearchDatatype.@string },
-                new MetaSearchKey() { Name = "ObjectName", Type = MetaSearchDatatype.@string },
-                new MetaSearchKey() { Name = "Owner", Type = MetaSearchDatatype.@string },
-                new MetaSearchKey() { Name = "Retention", Type = MetaSearchDatatype.integer },
-                new MetaSearchKey() { Name = "Size", Type = MetaSearchDatatype.integer },
-        };
-
         [ClassInitialize()]
         public static void Initialize(TestContext testContext)
         {
@@ -96,31 +54,6 @@ namespace ECSSDK.Test
                 UseHttp = false,
             };
             client = new ECSS3Client(creds, cc);
-
-            PutBucketRequestECS request = new PutBucketRequestECS()
-            {
-                BucketName = temp_bucket,
-            };
-
-            // Set the indexable search keys on the bucket.
-            request.SetMetadataSearchKeys(bucketMetadataSearchKeys);
-
-            client.PutBucket(request);
-
-            for (int i = 0; i < 5; i++)
-            {
-                PutObjectRequest object_request = new PutObjectRequest()
-                {
-                    BucketName = temp_bucket,
-                    Key = string.Format("obj-{0}", i),
-                    ContentBody = string.Format("This is sample content for object {0}", i)
-                };
-
-                object_request.Metadata.Add("x-amz-meta-decimalvalue", Convert.ToString(i * 2));
-                object_request.Metadata.Add("x-amz-meta-stringvalue", string.Format("sample-{0}", Convert.ToString(i)));
-
-                client.PutObject(object_request);
-            }
         }
 
         /// <summary>
@@ -152,163 +85,16 @@ namespace ECSSDK.Test
         }
 
         [TestMethod]
-        public void TestListBucketMetaSearchKeys()
+        public void TestPutBucketFileVPoolID()
         {
-            ListBucketMetaSearchKeysRequest request = new ListBucketMetaSearchKeysRequest()
+            PutBucketRequestECS request = new PutBucketRequestECS()
             {
-                BucketName = temp_bucket
+                BucketName = temp_bucket,
+                VirtualPoolId = ConfigurationManager.AppSettings["VPOOL_ID"]
             };
 
-            ListBucketMetaSearchKeysResponse response = client.ListBucketMetaSearchKeys(request);
-            Assert.IsNotNull(response.MetaDataSearchList.IndexableKeys);
-            CompareKeyResults(response.MetaDataSearchList.IndexableKeys, bucketMetadataSearchKeys);
-        }
-
-        [TestMethod]
-        public void TestListSystemMetaSearchKeys()
-        {
-            ListSystemMetaSearchKeysRequest request = new ListSystemMetaSearchKeysRequest();
-
-            ListSystemMetaSearchKeysResponse response = client.ListSystemMetaSearchKeys(request);
+            PutBucketResponseECS response = client.PutBucket(request);
             Assert.IsNotNull(response);
-            CompareKeyResults(response.MetaDataSearchList.IndexableKeys, indexableSystemKeys);
-            CompareKeyResults(response.MetaDataSearchList.OptionalAttributes, optionalSystemKeys);
-        }
-
-        private void CompareKeyResults(List<MetaSearchKey> actual, List<MetaSearchKey> expected)
-        {
-            Assert.AreEqual(actual.Count, expected.Count);
-
-            actual.Sort();
-
-            for (int i = 0; i < actual.Count; i++)
-            {
-                var key = actual[i];
-                Assert.AreEqual(key.Name, expected[i].Name);
-                Assert.AreEqual(key.Type, expected[i].Type);
-            }
-        }
-
-        [TestMethod]
-        public void TestingAQueryDecimal()
-        {
-            QueryObjectsRequest query_request = new QueryObjectsRequest()
-            {
-                BucketName = temp_bucket,
-                Query = "x-amz-meta-decimalvalue>=6",
-            };
-
-            var response = client.QueryObjects(query_request);
-            Assert.AreEqual(temp_bucket, response.BucketName);
-            Assert.IsNotNull(response.ObjectMatches);
-            Assert.AreEqual(2, response.ObjectMatches.Count);
-            Assert.AreEqual(false, response.IsSetNextMarker());
-        }
-
-        [TestMethod]
-        public void TestingAQueryString()
-        {
-            QueryObjectsRequest query_request = new QueryObjectsRequest()
-            {
-                BucketName = temp_bucket,
-                Query = "x-amz-meta-stringvalue==\"sample-4\"",
-            };
-
-            var response = client.QueryObjects(query_request);
-            Assert.AreEqual(temp_bucket, response.BucketName);
-            Assert.IsNotNull(response.ObjectMatches);
-            Assert.AreEqual(1, response.ObjectMatches.Count);
-            Assert.AreEqual(false, response.IsSetNextMarker());
-        }
-
-        [TestMethod]
-        public void TestingAQueryWithMaxKeysPaging()
-        {
-            QueryObjectsRequest query_request = new QueryObjectsRequest()
-            {
-                BucketName = temp_bucket,
-                Query = "x-amz-meta-decimalvalue>4",
-                MaxKeys = 1
-            };
-
-            bool more = true;
-            while (more)
-            {
-                var response = client.QueryObjects(query_request);
-                Assert.AreEqual(temp_bucket, response.BucketName);
-                Assert.AreEqual(1, response.ObjectMatches.Count);
-
-                if (response.IsSetNextMarker())
-                {
-                    query_request.Marker = response.NextMarker;
-                }
-                else
-                {
-                    more = false;
-                }
-            }
-        }
-
-        [TestMethod]
-        public void TestingAQueryWithVersioning()
-        {
-            string bucket = Guid.NewGuid().ToString();
-
-            PutBucketRequestECS pbr = new PutBucketRequestECS()
-            {
-                BucketName = bucket,
-            };
-
-            pbr.SetMetadataSearchKeys(bucketMetadataSearchKeys);
-
-            client.PutBucket(pbr);
-
-            PutBucketVersioningRequest pbv = new PutBucketVersioningRequest()
-            {
-                BucketName = bucket,
-                VersioningConfig = new S3BucketVersioningConfig()
-                {
-                    Status = VersionStatus.Enabled
-                }
-            };
-
-            client.PutBucketVersioning(pbv);
-
-            for (int i = 0; i < 5; i++)
-            {
-                PutObjectRequest object_request = new PutObjectRequest()
-                {
-                    BucketName = bucket,
-                    Key = string.Format("obj-{0}", i),
-                    ContentBody = string.Format("This is sample content for object {0}.", i)
-                };
-
-                object_request.Metadata.Add("x-amz-meta-decimalvalue", Convert.ToString(i * 2));
-                object_request.Metadata.Add("x-amz-meta-stringvalue", string.Format("sample-{0}", Convert.ToString(i)));
-
-                client.PutObject(object_request);
-
-                object_request.ContentBody = string.Format("This is sample content for object {0} after versioning has been enabled.", i);
-
-                client.PutObject(object_request);
-            }
-
-            QueryObjectsRequest qor = new QueryObjectsRequest()
-            {
-                BucketName = bucket,
-                IncludeOlderVersions = true,
-                Query = "x-amz-meta-decimalvalue>4"
-            };
-
-            var qor_respose = client.QueryObjects(qor);
-
-            Assert.IsNotNull(qor_respose.ObjectMatches);
-            Assert.AreEqual(4, qor_respose.ObjectMatches.Count);
-            Assert.AreEqual(bucket, qor_respose.BucketName);
-
-            CleanBucket(bucket);
-
-            client.DeleteBucket(bucket);
         }
 
 
