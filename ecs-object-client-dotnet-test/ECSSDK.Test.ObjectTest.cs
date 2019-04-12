@@ -23,9 +23,6 @@ using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
 
 namespace ECSSDK.Test
 {
