@@ -420,5 +420,30 @@ namespace ECSSDK.Test
             });
 
         }
+
+        [TestMethod]
+        public void TestObjectWithMetadata()
+        {
+            string key = "meta-1";
+            string content = "sample object data content ...";
+
+            PutObjectRequest por = new PutObjectRequest()
+            {
+                BucketName = temp_bucket,
+                Key = key,
+                ContentBody = content,
+            };
+
+            por.Metadata.Add("555", "55555");
+            por.Metadata.Add("bbb", "bbbbb");
+            por.Metadata.Add("b_b_b", "bubub");
+            por.Metadata.Add("aaa", "aaaaa");
+            por.Metadata.Add("a_a_a", "auaua");
+            por.Metadata.Add("111", "11111");
+
+            PutObjectResponse response = client.PutObject(por);
+            Assert.AreEqual(response.HttpStatusCode, System.Net.HttpStatusCode.OK);
+
+        }
     }
 }
