@@ -124,17 +124,22 @@ namespace ECSSDK.S3.Internal
 
         static string BuildCanonicalizedHeaders(IDictionary<string, string> headers)
         {
-            var sb = new StringBuilder(256);
-            foreach (var key in headers.Keys.OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase))
+            IDictionary<string, string> canonicalizedAmzHeaders = 
+                new Dictionary<string, string>();
+            foreach (var item in headers)
             {
-                var lowerKey = key.ToLowerInvariant();
-                if (!lowerKey.StartsWith("x-amz-", StringComparison.Ordinal) && 
+                var lowerKey = item.Key.ToLowerInvariant();
+                if (!lowerKey.StartsWith("x-amz-", StringComparison.Ordinal) &&
                     !lowerKey.StartsWith("x-emc-", StringComparison.Ordinal))
                     continue;
-
-                sb.Append(String.Concat(lowerKey, ":", headers[key], "\n"));
+                canonicalizedAmzHeaders.Add(lowerKey, item.Key);
             }
-
+            var sb = new StringBuilder(256);
+            foreach (var key in canonicalizedAmzHeaders.Keys.OrderBy(x => x, StringComparer.Ordinal))
+            {
+                var pointer = canonicalizedAmzHeaders[key];
+                sb.Append(String.Concat(key, ":", headers[pointer], "\n"));
+            }
             return sb.ToString();
         }
 

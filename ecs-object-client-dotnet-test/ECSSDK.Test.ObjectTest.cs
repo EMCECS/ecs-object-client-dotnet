@@ -438,12 +438,132 @@ namespace ECSSDK.Test
             por.Metadata.Add("bbb", "bbbbb");
             por.Metadata.Add("b_b_b", "bubub");
             por.Metadata.Add("aaa", "aaaaa");
+            por.Metadata.Add("b-b-b", "bdbdbd");
             por.Metadata.Add("a_a_a", "auaua");
             por.Metadata.Add("111", "11111");
+            por.Metadata.Add("a-a-a", "adadad");
+            por.Metadata.Add("a^a^a", "acacac");
+            por.Metadata.Add("a|a|a", "apapap");
 
             PutObjectResponse response = client.PutObject(por);
             Assert.AreEqual(response.HttpStatusCode, System.Net.HttpStatusCode.OK);
 
+        }
+
+        [DataTestMethod]
+        [DataRow(33)]
+        //Invalid, not supported [DataRow(34)]
+        [DataRow(35)]
+        [DataRow(36)]
+        [DataRow(37)]
+        [DataRow(38)]
+        //Invalid, not supported [DataRow(39)]
+        //Invalid, not supported [DataRow(40)]
+        //Invalid, not supported [DataRow(41)]
+        [DataRow(42)]
+        [DataRow(43)]
+        //Invalid, not supported [DataRow(44)]
+        [DataRow(45)]
+        [DataRow(46)]
+        //Invalid, not supported [DataRow(47)]
+        [DataRow(48)]
+        [DataRow(49)]
+        [DataRow(50)]
+        [DataRow(51)]
+        [DataRow(52)]
+        [DataRow(53)]
+        [DataRow(54)]
+        [DataRow(55)]
+        [DataRow(56)]
+        [DataRow(57)]
+        //Invalid, not supported [DataRow(58)]
+        //Invalid, not supported [DataRow(59)]
+        //Invalid, not supported [DataRow(60)]
+        //Invalid, not supported [DataRow(61)]
+        //Invalid, not supported [DataRow(62)]
+        //Invalid, not supported [DataRow(63)]
+        //Invalid, not supported [DataRow(64)]
+        [DataRow(65)]
+        [DataRow(66)]
+        [DataRow(67)]
+        [DataRow(68)]
+        [DataRow(69)]
+        [DataRow(70)]
+        [DataRow(71)]
+        [DataRow(72)]
+        [DataRow(73)]
+        [DataRow(74)]
+        [DataRow(75)]
+        [DataRow(76)]
+        [DataRow(77)]
+        [DataRow(78)]
+        [DataRow(79)]
+        [DataRow(80)]
+        [DataRow(81)]
+        [DataRow(82)]
+        [DataRow(83)]
+        [DataRow(84)]
+        [DataRow(85)]
+        [DataRow(86)]
+        [DataRow(87)]
+        [DataRow(88)]
+        [DataRow(89)]
+        [DataRow(90)]
+        //Invalid, not supported [DataRow(91)]
+        //Invalid, not supported [DataRow(92)]
+        //Invalid, not supported [DataRow(93)]
+        [DataRow(94)]
+        [DataRow(95)]
+        [DataRow(96)]
+        [DataRow(97)]
+        [DataRow(98)]
+        [DataRow(99)]
+        [DataRow(100)]
+        [DataRow(101)]
+        [DataRow(102)]
+        [DataRow(103)]
+        [DataRow(104)]
+        [DataRow(105)]
+        [DataRow(106)]
+        [DataRow(107)]
+        [DataRow(108)]
+        [DataRow(109)]
+        [DataRow(110)]
+        [DataRow(111)]
+        [DataRow(112)]
+        [DataRow(113)]
+        [DataRow(114)]
+        [DataRow(115)]
+        [DataRow(116)]
+        [DataRow(117)]
+        [DataRow(118)]
+        [DataRow(119)]
+        [DataRow(120)]
+        [DataRow(121)]
+        [DataRow(122)]
+        //Invalid, not supported [DataRow(123)]
+        [DataRow(124)]
+        //Invalid, not supported [DataRow(125)]
+        [DataRow(126)]
+        //Invalid, not supported [DataRow(127)]
+        public void TestObjectMetadataAscii(int asciiCharacter)
+        {
+            string key = "meta-1";
+            string content = "sample object data content ...";
+
+            PutObjectRequest por = new PutObjectRequest()
+            {
+                BucketName = temp_bucket,
+                Key = key,
+                ContentBody = content,
+            };
+
+            por.Metadata.Add("aaa", "aaaaa");
+            por.Metadata.Add("a_a_a".Replace("_", ((char)asciiCharacter).ToString()), "trick");
+
+            PutObjectResponse response = client.PutObject(por);
+            Assert.AreEqual(response.HttpStatusCode, System.Net.HttpStatusCode.OK,
+            string.Format("Issue with character: {0}", asciiCharacter));
         }
     }
 }
