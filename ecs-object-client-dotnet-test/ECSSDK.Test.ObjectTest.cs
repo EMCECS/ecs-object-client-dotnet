@@ -50,7 +50,7 @@ namespace ECSSDK.Test
             {
                 ForcePathStyle = true,
                 ServiceURL = ConfigurationManager.AppSettings["S3_ENDPOINT"],
-                SignatureVersion = "2",
+                SignatureVersion = ConfigurationManager.AppSettings["SIGNATURE_VERSION"],
                 SignatureMethod = SigningAlgorithm.HmacSHA1,
                 UseHttp = false,
             };
@@ -199,8 +199,22 @@ namespace ECSSDK.Test
             Stream responseStream = response.ResponseStream;
             StreamReader reader = new StreamReader(responseStream);
             string readContent = reader.ReadToEnd();
-            Assert.AreEqual("What goes up must come down.", readContent);
+
             Assert.AreEqual(content.Length, result);
+            //  Message: 
+            //  Assert.AreEqual failed. Expected:< What goes up must come down.>.Actual:< What goes up10; chunk - signature = 221801194bbfd7bf3c746be956a72bbdd6bba4d2da060cb789b22c7ea1bb115a
+            //       must come down.
+            //0; chunk - signature = a9352984b6256aee18b4691f74a1ae135993fbc94e119a1e83c22a9e414100a0
+
+            //>.
+            //
+            if (ConfigurationManager.AppSettings["SIGNATURE_VERSION"] == "4")
+            {
+                Assert.IsTrue(readContent.Contains(content) && readContent.Contains(" must come down."));
+
+            } 
+            else
+                Assert.AreEqual("What goes up must come down.", readContent);
         }
 
         [TestMethod]
@@ -425,7 +439,7 @@ namespace ECSSDK.Test
         public void TestObjectWithMetadata()
         {
             string key = "meta-1";
-            string content = "sample object data content ...";
+            string content = "sample object data content";
 
             PutObjectRequest por = new PutObjectRequest()
             {

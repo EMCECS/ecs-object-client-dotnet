@@ -18,12 +18,9 @@ using Amazon.S3.Model;
 using Amazon.Runtime;
 using ECSSDK.S3;
 using ECSSDK.S3.Model;
-using ECSSDK.S3.Model.Util;
 using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-
 
 namespace ECSSDK.Test
 {
@@ -49,7 +46,7 @@ namespace ECSSDK.Test
             {
                 ForcePathStyle = true,
                 ServiceURL = ConfigurationManager.AppSettings["S3_ENDPOINT"],
-                SignatureVersion = "2",
+                SignatureVersion = ConfigurationManager.AppSettings["SIGNATURE_VERSION"],
                 SignatureMethod = SigningAlgorithm.HmacSHA1,
                 UseHttp = false,
             };

@@ -19,6 +19,7 @@ using ECSSDK.S3.Model.Internal.MarshallTransformations;
 using ECSSDK.S3.Model;
 using Amazon.Runtime.Internal.Auth;
 using ECSSDK.S3.Model.Util;
+using Amazon.Runtime.Internal;
 
 namespace ECSSDK.S3
 {
@@ -45,7 +46,11 @@ namespace ECSSDK.S3
             var marshaller = new PutBucketRequestMarshallerECS();
             var unmarshaller = PutBucketResponseUnmarshallerECS.Instance;
 
-            return Invoke<PutBucketRequestECS, PutBucketResponseECS>(request, marshaller, unmarshaller);
+            InvokeOptions invokeOptions = new InvokeOptions();
+            invokeOptions.RequestMarshaller = marshaller;
+            invokeOptions.ResponseUnmarshaller = unmarshaller;
+
+            return Invoke<PutBucketResponseECS>(request, invokeOptions);
         }
 
         /// <summary>
@@ -58,7 +63,11 @@ namespace ECSSDK.S3
             var marshaller = new ListBucketMetaSearchKeysRequestMarshaller();
             var unmarshaller = ListBucketMetaSearchKeysResponseUnMarshaller.Instance;
 
-            return Invoke<ListBucketMetaSearchKeysRequest, ListBucketMetaSearchKeysResponse>(request, marshaller, unmarshaller);
+            InvokeOptions invokeOptions = new InvokeOptions();
+            invokeOptions.RequestMarshaller = marshaller;
+            invokeOptions.ResponseUnmarshaller = unmarshaller;
+
+            return Invoke<ListBucketMetaSearchKeysResponse>(request, invokeOptions);
         }
 
         /// <summary>
@@ -71,7 +80,11 @@ namespace ECSSDK.S3
             var marshaller = new ListSystemMetaSearchKeysRequestMarshaller();
             var unmarshaller = ListSystemMetaSearchKeysResponseUnMarshaller.Instance;
 
-            return Invoke<ListSystemMetaSearchKeysRequest, ListSystemMetaSearchKeysResponse>(request, marshaller, unmarshaller);
+            InvokeOptions invokeOptions = new InvokeOptions();
+            invokeOptions.RequestMarshaller = marshaller;
+            invokeOptions.ResponseUnmarshaller = unmarshaller;
+
+            return Invoke<ListSystemMetaSearchKeysResponse>(request, invokeOptions);
         }
 
         /// <summary>
@@ -84,7 +97,11 @@ namespace ECSSDK.S3
             var marshaller = new PutObjectRequestMarshallerECS();
             var unmarshaller = PutObjectResponseUnmarshallerECS.Instance;
 
-            return Invoke<PutObjectRequestECS, PutObjectResponseECS>(request, marshaller, unmarshaller);
+            InvokeOptions invokeOptions = new InvokeOptions();
+            invokeOptions.RequestMarshaller = marshaller;
+            invokeOptions.ResponseUnmarshaller = unmarshaller;
+
+            return Invoke<PutObjectResponseECS>(request, invokeOptions);
         }
 
         /// <summary>
@@ -97,6 +114,10 @@ namespace ECSSDK.S3
             var marshaller = new PutObjectRequestMarshallerECS();
             var unmarshaller = PutObjectResponseUnmarshallerECS.Instance;
 
+            InvokeOptions invokeOptions = new InvokeOptions();
+            invokeOptions.RequestMarshaller = marshaller;
+            invokeOptions.ResponseUnmarshaller = unmarshaller;
+
             PutObjectRequestECS request = new PutObjectRequestECS()
             {
                 BucketName = bucketName,
@@ -105,8 +126,7 @@ namespace ECSSDK.S3
                 Range = Range.fromOffset(-1)
             };
 
-            PutObjectResponseECS response = Invoke<PutObjectRequestECS, PutObjectResponseECS>(request, marshaller, unmarshaller);
-            
+            PutObjectResponseECS response = Invoke<PutObjectResponseECS>(request, invokeOptions);
             return response.AppendOffset;
         }
 
@@ -120,7 +140,11 @@ namespace ECSSDK.S3
             var marshaller = new QueryObjectsRequestMarshaller();
             var unmarshaller = QueryObjectsResponseUnmarshaller.Instance;
 
-            return Invoke<QueryObjectsRequest, QueryObjectsResponse>(request, marshaller, unmarshaller);
+            InvokeOptions invokeOptions = new InvokeOptions();
+            invokeOptions.RequestMarshaller = marshaller;
+            invokeOptions.ResponseUnmarshaller = unmarshaller;
+
+            return Invoke<QueryObjectsResponse>(request, invokeOptions); 
         }
 
         protected override AbstractAWSSigner CreateSigner()

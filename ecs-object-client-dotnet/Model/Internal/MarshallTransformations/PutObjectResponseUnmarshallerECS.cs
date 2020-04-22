@@ -95,7 +95,7 @@ namespace ECSSDK.S3.Model.Internal.MarshallTransformations
             ruleId = UrlDecode(ruleIdValue);
 
             Expiration result = new Expiration() {
-                ExpiryDate = expiryDate,
+                ExpiryDateUtc = expiryDate,
                 RuleId = ruleId
             };
 
