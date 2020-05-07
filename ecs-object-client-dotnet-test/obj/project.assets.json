@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "AWSSDK.Core/3.3.106.4": {
+      "AWSSDK.Core/3.3.106.9": {
         "type": "package",
         "compile": {
           "lib/net45/AWSSDK.Core.dll": {}
@@ -11,10 +11,10 @@
           "lib/net45/AWSSDK.Core.dll": {}
         }
       },
-      "AWSSDK.S3/3.3.110.50": {
+      "AWSSDK.S3/3.3.110.55": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.3.106.3, 3.4.0)"
+          "AWSSDK.Core": "[3.3.106.9, 3.4.0)"
         },
         "compile": {
           "lib/net45/AWSSDK.S3.dll": {}
@@ -45,8 +45,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "AWSSDK.Core": "3.3.106.4",
-          "AWSSDK.S3": "3.3.110.50"
+          "AWSSDK.Core": "3.3.106.9",
+          "AWSSDK.S3": "3.3.110.55"
         },
         "compile": {
           "bin/placeholder/ECSSDK.S3.dll": {}
@@ -57,7 +57,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win": {
-      "AWSSDK.Core/3.3.106.4": {
+      "AWSSDK.Core/3.3.106.9": {
         "type": "package",
         "compile": {
           "lib/net45/AWSSDK.Core.dll": {}
@@ -66,10 +66,10 @@
           "lib/net45/AWSSDK.Core.dll": {}
         }
       },
-      "AWSSDK.S3/3.3.110.50": {
+      "AWSSDK.S3/3.3.110.55": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.3.106.3, 3.4.0)"
+          "AWSSDK.Core": "[3.3.106.9, 3.4.0)"
         },
         "compile": {
           "lib/net45/AWSSDK.S3.dll": {}
@@ -100,8 +100,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "AWSSDK.Core": "3.3.106.4",
-          "AWSSDK.S3": "3.3.110.50"
+          "AWSSDK.Core": "3.3.106.9",
+          "AWSSDK.S3": "3.3.110.55"
         },
         "compile": {
           "bin/placeholder/ECSSDK.S3.dll": {}
@@ -112,7 +112,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win-x64": {
-      "AWSSDK.Core/3.3.106.4": {
+      "AWSSDK.Core/3.3.106.9": {
         "type": "package",
         "compile": {
           "lib/net45/AWSSDK.Core.dll": {}
@@ -121,10 +121,10 @@
           "lib/net45/AWSSDK.Core.dll": {}
         }
       },
-      "AWSSDK.S3/3.3.110.50": {
+      "AWSSDK.S3/3.3.110.55": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.3.106.3, 3.4.0)"
+          "AWSSDK.Core": "[3.3.106.9, 3.4.0)"
         },
         "compile": {
           "lib/net45/AWSSDK.S3.dll": {}
@@ -155,8 +155,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "AWSSDK.Core": "3.3.106.4",
-          "AWSSDK.S3": "3.3.110.50"
+          "AWSSDK.Core": "3.3.106.9",
+          "AWSSDK.S3": "3.3.110.55"
         },
         "compile": {
           "bin/placeholder/ECSSDK.S3.dll": {}
@@ -167,7 +167,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win-x86": {
-      "AWSSDK.Core/3.3.106.4": {
+      "AWSSDK.Core/3.3.106.9": {
         "type": "package",
         "compile": {
           "lib/net45/AWSSDK.Core.dll": {}
@@ -176,10 +176,10 @@
           "lib/net45/AWSSDK.Core.dll": {}
         }
       },
-      "AWSSDK.S3/3.3.110.50": {
+      "AWSSDK.S3/3.3.110.55": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.3.106.3, 3.4.0)"
+          "AWSSDK.Core": "[3.3.106.9, 3.4.0)"
         },
         "compile": {
           "lib/net45/AWSSDK.S3.dll": {}
@@ -210,8 +210,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "AWSSDK.Core": "3.3.106.4",
-          "AWSSDK.S3": "3.3.110.50"
+          "AWSSDK.Core": "3.3.106.9",
+          "AWSSDK.S3": "3.3.110.55"
         },
         "compile": {
           "bin/placeholder/ECSSDK.S3.dll": {}
@@ -223,15 +223,15 @@
     }
   },
   "libraries": {
-    "AWSSDK.Core/3.3.106.4": {
-      "sha512": "XOaG8oBQn5tfB5z36HsCUu6eZm/1B7QoNe+9ELlnT3qswLJA6pUoMTpf5wFAEuVpvLQ6I6ps2bro9yCFzhfAKQ==",
+    "AWSSDK.Core/3.3.106.9": {
+      "sha512": "jwE8uAVlpo7scgk1plIr7VW5/PJ3Vs7bQboZP9AIh8Mo6rImqF63fUi9ISw9pKzx5+SPdFQd7qqq5dsE5uFHlw==",
       "type": "package",
-      "path": "awssdk.core/3.3.106.4",
+      "path": "awssdk.core/3.3.106.9",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "awssdk.core.3.3.106.4.nupkg.sha512",
+        "awssdk.core.3.3.106.9.nupkg.sha512",
         "awssdk.core.nuspec",
         "lib/MonoAndroid10/AWSSDK.Core.XML",
         "lib/MonoAndroid10/AWSSDK.Core.dll",
@@ -272,16 +272,16 @@
         "tools/account-management.ps1"
       ]
     },
-    "AWSSDK.S3/3.3.110.50": {
-      "sha512": "H0tu/MdUG7jhDieqzsiMPIeV4B99tIaUvQn/UOkS6iZtGjnXFFzlswyB40tDsm2E1hcePMvcs5iHU1DyNMEmAw==",
+    "AWSSDK.S3/3.3.110.55": {
+      "sha512": "A/hC7GW0SVjTazVTATGThxNkW3j94T2ehsLjb+HK5ns9ccHU3NvR715sDk3wDIRM7C8XyoV/UGbqLjUsqJkWeg==",
       "type": "package",
-      "path": "awssdk.s3/3.3.110.50",
+      "path": "awssdk.s3/3.3.110.55",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "analyzers/dotnet/cs/AWSSDK.S3.CodeAnalysis.dll",
-        "awssdk.s3.3.3.110.50.nupkg.sha512",
+        "awssdk.s3.3.3.110.55.nupkg.sha512",
         "awssdk.s3.nuspec",
         "lib/MonoAndroid10/AWSSDK.S3.XML",
         "lib/MonoAndroid10/AWSSDK.S3.dll",
@@ -484,8 +484,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.5": [
-      "AWSSDK.Core >= 3.3.106.4",
-      "AWSSDK.S3 >= 3.3.110.50",
+      "AWSSDK.Core >= 3.3.106.9",
+      "AWSSDK.S3 >= 3.3.110.55",
       "ECSSDK.S3 >= 1.0.0",
       "MSTest.TestAdapter >= 2.0.0",
       "MSTest.TestFramework >= 2.0.0"
@@ -530,11 +530,11 @@
         "dependencies": {
           "AWSSDK.Core": {
             "target": "Package",
-            "version": "[3.3.106.4, )"
+            "version": "[3.3.106.9, )"
           },
           "AWSSDK.S3": {
             "target": "Package",
-            "version": "[3.3.110.50, )"
+            "version": "[3.3.110.55, )"
           },
           "MSTest.TestAdapter": {
             "target": "Package",

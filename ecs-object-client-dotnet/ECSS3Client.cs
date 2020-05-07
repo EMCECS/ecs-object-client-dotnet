@@ -123,7 +123,8 @@ namespace ECSSDK.S3
                 BucketName = bucketName,
                 Key = keyName,
                 ContentBody = contentBody,
-                Range = Range.fromOffset(-1)
+                Range = Range.fromOffset(-1),
+                UseChunkEncoding = false
             };
 
             PutObjectResponseECS response = Invoke<PutObjectResponseECS>(request, invokeOptions);

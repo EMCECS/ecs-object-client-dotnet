@@ -13,7 +13,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\hem4\.nuget\packages\awssdk.core\3.3.106.4</PkgAWSSDK_Core>
-    <PkgAWSSDK_S3 Condition=" '$(PkgAWSSDK_S3)' == '' ">C:\Users\hem4\.nuget\packages\awssdk.s3\3.3.110.50</PkgAWSSDK_S3>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\hem4\.nuget\packages\awssdk.core\3.3.106.9</PkgAWSSDK_Core>
+    <PkgAWSSDK_S3 Condition=" '$(PkgAWSSDK_S3)' == '' ">C:\Users\hem4\.nuget\packages\awssdk.s3\3.3.110.55</PkgAWSSDK_S3>
   </PropertyGroup>
 </Project>

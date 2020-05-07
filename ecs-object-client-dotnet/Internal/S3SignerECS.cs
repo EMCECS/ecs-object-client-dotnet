@@ -54,7 +54,6 @@ namespace ECSSDK.S3.Internal
                 var signingResult = aws4Signer.SignRequest(request, clientConfig, metrics, awsAccessKeyId, awsSecretAccessKey);
                 request.Headers[HeaderKeys.AuthorizationHeader] = signingResult.ForAuthorizationHeader;
                 if (request.UseChunkEncoding)
-                    //throw new Exception("not chunked");
                     request.AWS4SignerResult = signingResult;
             }
             else

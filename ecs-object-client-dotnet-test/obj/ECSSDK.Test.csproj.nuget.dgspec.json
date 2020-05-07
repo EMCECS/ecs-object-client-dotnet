@@ -40,11 +40,11 @@
           "dependencies": {
             "AWSSDK.Core": {
               "target": "Package",
-              "version": "[3.3.106.4, )"
+              "version": "[3.3.106.9, )"
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.3.110.50, )"
+              "version": "[3.3.110.55, )"
             },
             "MSTest.TestAdapter": {
               "target": "Package",
@@ -101,11 +101,11 @@
           "dependencies": {
             "AWSSDK.Core": {
               "target": "Package",
-              "version": "[3.3.106.4, )"
+              "version": "[3.3.106.9, )"
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.3.110.50, )"
+              "version": "[3.3.110.55, )"
             }
           }
         }

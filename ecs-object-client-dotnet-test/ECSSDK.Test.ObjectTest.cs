@@ -54,6 +54,7 @@ namespace ECSSDK.Test
                 SignatureMethod = SigningAlgorithm.HmacSHA1,
                 UseHttp = false,
             };
+
             client = new ECSS3Client(creds, cc);
 
             PutBucketRequestECS request = new PutBucketRequestECS()
@@ -128,7 +129,8 @@ namespace ECSSDK.Test
             {
                 BucketName = temp_bucket,
                 Key = key,
-                ContentBody = content
+                ContentBody = content,
+                UseChunkEncoding = false
             };
 
             // create the object
@@ -141,7 +143,8 @@ namespace ECSSDK.Test
                 BucketName = temp_bucket,
                 Key = key,
                 Range = Range.fromOffsetLength(offset, updatePart.Length),
-                ContentBody = updatePart
+                ContentBody = updatePart,
+                UseChunkEncoding = false
             };
 
             // update the object
@@ -161,7 +164,8 @@ namespace ECSSDK.Test
                 BucketName = temp_bucket,
                 Key = key,
                 Range = Range.fromOffset(offset),
-                ContentBody = updatePart
+                ContentBody = updatePart,
+                UseChunkEncoding = false
             };
 
             client.PutObject(por);
@@ -191,6 +195,15 @@ namespace ECSSDK.Test
             // create the object
             client.PutObject(por);
 
+            GetObjectResponse respone = client.GetObject(temp_bucket, key);
+            Stream responeStream = respone.ResponseStream;
+            StreamReader reader1 = new StreamReader(responeStream);
+            string readContent1 = reader1.ReadToEnd();
+
+            Assert.AreEqual(content.Length, readContent1.Length);
+            Assert.AreEqual("What goes up", readContent1);
+
+
             // append to the object
             long result = client.AppendObject(temp_bucket, key, " must come down.");
 
@@ -201,20 +214,7 @@ namespace ECSSDK.Test
             string readContent = reader.ReadToEnd();
 
             Assert.AreEqual(content.Length, result);
-            //  Message: 
-            //  Assert.AreEqual failed. Expected:< What goes up must come down.>.Actual:< What goes up10; chunk - signature = 221801194bbfd7bf3c746be956a72bbdd6bba4d2da060cb789b22c7ea1bb115a
-            //       must come down.
-            //0; chunk - signature = a9352984b6256aee18b4691f74a1ae135993fbc94e119a1e83c22a9e414100a0
-
-            //>.
-            //
-            if (ConfigurationManager.AppSettings["SIGNATURE_VERSION"] == "4")
-            {
-                Assert.IsTrue(readContent.Contains(content) && readContent.Contains(" must come down."));
-
-            } 
-            else
-                Assert.AreEqual("What goes up must come down.", readContent);
+            Assert.AreEqual("What goes up must come down.", readContent);
         }
 
         [TestMethod]
@@ -445,19 +445,19 @@ namespace ECSSDK.Test
             {
                 BucketName = temp_bucket,
                 Key = key,
-                ContentBody = content,
+                ContentBody = content
             };
 
             por.Metadata.Add("555", "55555");
             por.Metadata.Add("bbb", "bbbbb");
-            por.Metadata.Add("b_b_b", "bubub");
+            //por.Metadata.Add("b_b_b", "bubub");
             por.Metadata.Add("aaa", "aaaaa");
             por.Metadata.Add("b-b-b", "bdbdbd");
-            por.Metadata.Add("a_a_a", "auaua");
+            //por.Metadata.Add("a_a_a", "auaua");
             por.Metadata.Add("111", "11111");
             por.Metadata.Add("a-a-a", "adadad");
-            por.Metadata.Add("a^a^a", "acacac");
-            por.Metadata.Add("a|a|a", "apapap");
+            //por.Metadata.Add("a^a^a", "acacac");
+            //por.Metadata.Add("a|a|a", "apapap");
 
             PutObjectResponse response = client.PutObject(por);
             Assert.AreEqual(response.HttpStatusCode, System.Net.HttpStatusCode.OK);
@@ -526,9 +526,9 @@ namespace ECSSDK.Test
         //Invalid, not supported [DataRow(91)]
         //Invalid, not supported [DataRow(92)]
         //Invalid, not supported [DataRow(93)]
-        [DataRow(94)]
-        [DataRow(95)]
-        [DataRow(96)]
+        //Invalid, not supported [DataRow(94)]
+        //Invalid, not supported [DataRow(95)]
+        //Invalid, not supported [DataRow(96)]
         [DataRow(97)]
         [DataRow(98)]
         [DataRow(99)]
@@ -569,15 +569,40 @@ namespace ECSSDK.Test
             {
                 BucketName = temp_bucket,
                 Key = key,
-                ContentBody = content,
+                ContentBody = content
             };
 
             por.Metadata.Add("aaa", "aaaaa");
-            por.Metadata.Add("a_a_a".Replace("_", ((char)asciiCharacter).ToString()), "trick");
+            por.Metadata.Add("a-a-a".Replace("-", ((char)asciiCharacter).ToString()), "trick");
 
             PutObjectResponse response = client.PutObject(por);
             Assert.AreEqual(response.HttpStatusCode, System.Net.HttpStatusCode.OK,
             string.Format("Issue with character: {0}", asciiCharacter));
+        }
+
+        [TestMethod]
+        public void TestPutObject() 
+        {
+            string key = "key-1";
+            string content = "TestPutObject";
+
+            PutObjectRequestECS por = new PutObjectRequestECS()
+            {
+                BucketName = temp_bucket,
+                Key = key,
+                ContentBody = content
+            };
+
+            // create the object
+            client.PutObject(por);
+
+            GetObjectResponse respone = client.GetObject(temp_bucket, key);
+            Stream responeStream = respone.ResponseStream;
+            StreamReader reader = new StreamReader(responeStream);
+            string readContent = reader.ReadToEnd();
+
+            Assert.AreEqual(content.Length, readContent.Length);
+            Assert.AreEqual("TestPutObject", readContent);
         }
     }
 }
