@@ -129,12 +129,19 @@ namespace ECSSDK.Test
             {
                 BucketName = temp_bucket,
                 Key = key,
-                ContentBody = content,
-                UseChunkEncoding = false
+                ContentBody = content
             };
 
             // create the object
             client.PutObject(por);
+
+            GetObjectResponse respone = client.GetObject(temp_bucket, key);
+            Stream responeStream = respone.ResponseStream;
+            StreamReader reader1 = new StreamReader(responeStream);
+            string readContent1 = reader1.ReadToEnd();
+
+            Assert.AreEqual(content.Length, readContent1.Length);
+            Assert.AreEqual("The cat crossed the road.", readContent1);
 
             string updatePart = "dog";
 
@@ -142,9 +149,8 @@ namespace ECSSDK.Test
             {
                 BucketName = temp_bucket,
                 Key = key,
-                Range = Range.fromOffsetLength(offset, updatePart.Length),
                 ContentBody = updatePart,
-                UseChunkEncoding = false
+                Range = Range.fromOffsetLength(offset, updatePart.Length)
             };
 
             // update the object
@@ -164,8 +170,7 @@ namespace ECSSDK.Test
                 BucketName = temp_bucket,
                 Key = key,
                 Range = Range.fromOffset(offset),
-                ContentBody = updatePart,
-                UseChunkEncoding = false
+                ContentBody = updatePart
             };
 
             client.PutObject(por);
