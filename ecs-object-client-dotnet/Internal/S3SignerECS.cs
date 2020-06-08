@@ -51,7 +51,10 @@ namespace ECSSDK.S3.Internal
 
             if (useV4)
             {
-                throw new ArgumentException("Use of AWS V4 signature is not supported in this library.");
+                var signingResult = aws4Signer.SignRequest(request, clientConfig, metrics, awsAccessKeyId, awsSecretAccessKey);
+                request.Headers[HeaderKeys.AuthorizationHeader] = signingResult.ForAuthorizationHeader;
+                if (request.UseChunkEncoding)
+                    request.AWS4SignerResult = signingResult;
             }
             else
                 SignRequest(request, metrics, awsAccessKeyId, awsSecretAccessKey);

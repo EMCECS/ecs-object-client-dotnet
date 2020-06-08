@@ -50,7 +50,7 @@ namespace ECSSDK.Test
             {
                 ForcePathStyle = true,
                 ServiceURL = ConfigurationManager.AppSettings["S3_ENDPOINT"],
-                SignatureVersion = "2",
+                SignatureVersion = ConfigurationManager.AppSettings["SIGNATURE_VERSION"],
                 SignatureMethod = SigningAlgorithm.HmacSHA1,
                 UseHttp = false,
             };
@@ -146,6 +146,14 @@ namespace ECSSDK.Test
 
             // update the object
             client.PutObject(por);
+
+            GetObjectResponse respone = client.GetObject(temp_bucket, key);
+            Stream responeStream = respone.ResponseStream;
+            StreamReader reader1 = new StreamReader(responeStream);
+            string readContent1 = reader1.ReadToEnd();
+
+            Assert.AreEqual(content.Length, readContent1.Length);
+            Assert.AreEqual("The dog crossed the road.", readContent1);
 
             // verify update
             GetObjectResponse response = client.GetObject(temp_bucket, key);
@@ -436,13 +444,13 @@ namespace ECSSDK.Test
 
             por.Metadata.Add("555", "55555");
             por.Metadata.Add("bbb", "bbbbb");
-            por.Metadata.Add("b_b_b", "bubub");
+            //Invalid, v4 not supported por.Metadata.Add("b_b_b", "bubub");
             por.Metadata.Add("aaa", "aaaaa");
             por.Metadata.Add("b-b-b", "bdbdbd");
-            por.Metadata.Add("a_a_a", "auaua");
+            //Invalid, v4 not supported por.Metadata.Add("a_a_a", "auaua");
             por.Metadata.Add("111", "11111");
             por.Metadata.Add("a-a-a", "adadad");
-            por.Metadata.Add("a^a^a", "acacac");
+            //Invalid, v4 not supported por.Metadata.Add("a^a^a", "acacac");
             por.Metadata.Add("a|a|a", "apapap");
 
             PutObjectResponse response = client.PutObject(por);
@@ -512,9 +520,9 @@ namespace ECSSDK.Test
         //Invalid, not supported [DataRow(91)]
         //Invalid, not supported [DataRow(92)]
         //Invalid, not supported [DataRow(93)]
-        [DataRow(94)]
-        [DataRow(95)]
-        [DataRow(96)]
+        //Invalid, v4 not supported [DataRow(94)]
+        //Invalid, v4 not supported [DataRow(95)]
+        //Invalid, v4 not supported [DataRow(96)]
         [DataRow(97)]
         [DataRow(98)]
         [DataRow(99)]
@@ -564,6 +572,31 @@ namespace ECSSDK.Test
             PutObjectResponse response = client.PutObject(por);
             Assert.AreEqual(response.HttpStatusCode, System.Net.HttpStatusCode.OK,
             string.Format("Issue with character: {0}", asciiCharacter));
+        }
+
+        [TestMethod]
+        public void TestPutObject()
+        {
+            string key = "key-1";
+            string content = "TestPutObject";
+
+            PutObjectRequestECS por = new PutObjectRequestECS()
+            {
+                BucketName = temp_bucket,
+                Key = key,
+                ContentBody = content
+            };
+
+            // create the object
+            client.PutObject(por);
+
+            GetObjectResponse respone = client.GetObject(temp_bucket, key);
+            Stream responeStream = respone.ResponseStream;
+            StreamReader reader = new StreamReader(responeStream);
+            string readContent = reader.ReadToEnd();
+
+            Assert.AreEqual(content.Length, readContent.Length);
+            Assert.AreEqual("TestPutObject", readContent);
         }
     }
 }
