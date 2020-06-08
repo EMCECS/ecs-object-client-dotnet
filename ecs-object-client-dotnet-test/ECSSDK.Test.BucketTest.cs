@@ -49,7 +49,7 @@ namespace ECSSDK.Test
             {
                 ForcePathStyle = true,
                 ServiceURL = ConfigurationManager.AppSettings["S3_ENDPOINT"],
-                SignatureVersion = "2",
+                SignatureVersion = ConfigurationManager.AppSettings["SIGNATURE_VERSION"],
                 SignatureMethod = SigningAlgorithm.HmacSHA1,
                 UseHttp = false,
             };
